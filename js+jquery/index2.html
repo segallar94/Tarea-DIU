@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>Bootstrap Example</title>
+  <img src="gim_logo.png" alt="header" align="middle" hspace="250"/>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,6 +14,7 @@
       margin-bottom: 0;
       border-radius: 0;
     }
+
 
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
@@ -311,9 +313,8 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Perfil</div>
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+				<h1 class="page-header" >Reserva bloque de Maquinas</h1>
         <div id="table-container">
-          <h3>Ahora seleccione los horarios que tiene disponible</h3>
           <table id="table" align="center">
             <tr id="days"></tr>
           </table>
@@ -323,9 +324,9 @@
 
       </div>
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        Aerobica
+        <h1 class="page-header" >Reserva bloque de Aerobica</h1>
         <div id="table-container">
-          <h3>Ahora seleccione los horarios que tiene disponible</h3>
+
           <table id="table" align="center">
             <tr id="days"></tr>
           </table>
@@ -338,9 +339,16 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
+<footer class="containe text-justify">
+	<div class="grid">
+		<div class="row">
+			<div class="c12">
+				<p>© Universidad Técnica Federico Santa María - Servicio de Apoyo Docente<br/>
+				Avenida España 1680, Valparaíso<br/>
+				<a href="tel:+56322654432"> +56 32 2654000 </a>  <a href="mailto:gim3@usm.cl">gim3@usm.cl</a></p>
+			</div>
+		</div>
+	</div>
 </footer>
-
 </body>
 </html>
