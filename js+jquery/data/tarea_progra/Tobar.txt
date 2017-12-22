@@ -1,0 +1,1 @@
+["cell_1-2_Miercoles","cell_5-6_Lunes","cell_5-6_Martes","cell_5-6_Miercoles","cell_7-8_Miercoles","cell_7-8_Viernes","cell_9-10_Martes","cell_9-10_Miercoles","cell_9-10_Jueves","cell_9-10_Viernes","cell_11-12_Jueves","cell_13-14_Miercoles"]

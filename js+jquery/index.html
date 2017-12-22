@@ -1,0 +1,330 @@
+<html>
+	<head>
+		<title>USM Horarios</title>
+		<meta charset="UTF-8">
+		<style type="text/css">
+		body {
+			background-color: #F7F7F7;
+			font-family: sans-serif;
+			font-size: 24px;
+			padding: 0px;
+			margin: 0px;
+		}
+
+		h1, h3, h4 {
+			margin: 5px;
+			text-align: center;
+		}
+
+		h4 {
+			font-size: 16px;
+		}
+
+		h1 {
+			background-color: #EEE;
+			margin-top: 15px;
+		}
+
+		input[type=text] {
+			margin: 5px;
+			font-size: 30px;
+			padding: 10px;
+			font-weight: bold;
+			font-family: Calibri;
+			text-align: center;
+			width: 75%;
+		}
+
+		input[type=button] {
+			margin: 20px;
+			font-size: 20px;
+			padding: 10px;
+			font-weight: bold;
+			font-family: Calibri;
+			text-align: center;
+			width: 300px;
+		}
+
+		div {
+			text-align: center;
+			display: none;
+		}
+
+		#table {
+			text-align: center;
+		}
+
+		#table tr td {
+			width: 150px;
+			font-size: 24px;
+		}
+
+
+		#ststable {
+			text-align: center;
+		}
+
+		#ststable tr td {
+			width: 150px;
+			font-size: 24px;
+			text-align: center;
+		}
+
+		.stscell {
+			border: 1px #000 solid;
+		}
+
+		#ststable tr td .indc {
+			background-color: #CCC;
+			height: 30px;
+			display: block;
+			width: 0%;
+		}
+
+		.totally {
+			background-color: #336699 !important;
+		}
+
+		.selectable {
+			background-color: #FFF;
+			border: 1px #000 solid;
+			cursor: pointer;
+			transition: 0.5s;
+		}
+
+		.selectable:hover {
+			background-color: #CCC;
+		}
+
+		.selected {
+			background-color: #336699;
+		}
+
+		.selected:hover {
+			background-color: #336699;
+		}
+
+		#footer {
+			position: fixed;
+			bottom: 10px;
+			right: 10px;
+		}
+		</style>
+
+		<script src="jquery.js"></script>
+		<script type="text/javascript">
+		var id;
+
+		function complete_table() {
+			var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+
+			$('#days').append('<td></td>');
+			for(var i = 0; i < days.length; i++)
+				$('#days').append('<td>' + days[i] + '</td>');
+
+			for(var i = 1; i <= 14; i += 2) {
+				var final_text = '';
+
+				final_text += '<tr><td>' + i + ' - ' + (i + 1) + '</td>';
+
+				for(var j = 0; j < days.length; j++)
+					final_text += '<td class="selectable" id="cell_' + i + '-' + (i + 1) + '_' +
+						days[j] + '"></td>';
+
+				$('#table').append(final_text);
+			}
+		}
+
+		function complete_table_sts() {
+			var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+
+			$('#stsdays').append('<td></td>');
+			for(var i = 0; i < days.length; i++)
+				$('#stsdays').append('<td>' + days[i] + '</td>');
+
+			for(var i = 1; i <= 14; i += 2) {
+				var final_text = '';
+
+				final_text += '<tr><td>' + i + ' - ' + (i + 1) + '</td>';
+
+				for(var j = 0; j < days.length; j++)
+					final_text += '<td class="stscell" id="stscell_' + i + '-' + (i + 1) + '_' +
+						days[j] + '"><span class="indc"></span></td>';
+
+				$('#ststable').append(final_text);
+			}
+		}
+
+		function get_result() {
+			var array = [];
+			$('.selectable').each(function() {
+				if($(this).hasClass('selected'))
+					array.push($(this).attr('id'));
+			});
+
+			return array;
+		}
+
+		function load_data() {
+			$.get('load.php?id=' + id, function(data) {
+				load_into_table(JSON.parse(data));
+				$('#table-container').slideUp();
+				$('#name-container').slideUp();
+				$('#stats-container').slideDown();
+			});
+		}
+
+		function getUrlParameter(sParam) {
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) {
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) {
+					return sParameterName[1];
+				}
+			}
+		}          
+
+		function load_into_table(data) {
+			if(data == null || data == undefined || data == false) return;
+
+			var size = Object.keys(data).length;
+			var data_per_day = {};
+			var names_per_day = {};
+			var max = 0;
+
+			for(var name in data)
+				for(var i = 0; i < data[name].length; i++) {
+					if(data_per_day[data[name][i]] != undefined) {
+						data_per_day[data[name][i]]++;
+						names_per_day[data[name][i]] += ", " + name;
+					} else {
+						data_per_day[data[name][i]] = 1;
+						names_per_day[data[name][i]] = name;
+					}
+				}
+			
+			for(var stats in data_per_day) {
+				if(data_per_day[stats] > max) {
+					max = data_per_day[stats];
+				}
+			}
+
+			for(var block in data_per_day) {
+				$('#sts' + block + ' > .indc').css('width', data_per_day[block] / size * 100 + "%");
+				$('#sts' + block).attr('title', names_per_day[block]);
+
+				if(data_per_day[block] == max)
+					$('#sts' + block + ' > .indc').addClass('totally');
+				else
+					$('#sts' + block + ' > .indc').removeClass('totally');
+			}
+		}
+
+		function load_previous_data(username) {
+			$.get('load_user.php?id=' + id + '&username=' + username, function(data) {
+				if(data == null || data == undefined || data == false) return;
+
+				var blocks = JSON.parse(data);
+				for(var block in blocks) {
+					$('#' + blocks[block]).addClass('selected');
+				}
+			});
+		}
+
+		$(document).ready(function() {
+			id = getUrlParameter('id');
+
+			if(id == undefined)
+				$('#new-container').slideDown();
+			else
+				$('#name-container').slideDown();
+
+			complete_table_sts();
+			complete_table();
+
+			$('.selectable').click(function() {
+				$(this).toggleClass('selected');
+			});
+
+			$('#name-field').keypress(function(e) {
+				if(e.which == 13) {
+					load_previous_data($('#name-field').val());
+					$('#table-container').slideDown();
+					$('#name-container').slideUp();
+			    }
+			});
+
+			$('#id-field').keypress(function(e) {
+				if(e.which == 13) {
+					if($('#id-field').val() == '') return;
+					id = $('#id-field').val()
+						.replace(' ', '_')
+						.replace('á', 'a')
+						.replace('é', 'e')
+						.replace('í', 'i')
+						.replace('ó', 'o')
+						.replace('ú', 'u');
+					location.href += "?id=" + id;
+			    }
+			});
+
+			$('.back-button').click(function() {
+				$('#name-container').slideDown();
+				$('#stats-container').slideUp();
+				$('#table-container').slideUp();
+			});
+
+			$('#send-button').click(function() {
+				$.post('save.php?id=' + id, {schedule: JSON.stringify(get_result()),
+					name: $('#name-field').val()},
+					function() {
+						load_data();
+						alert("Cargado exitosamente. Para cambiar la informacion use el mismo nombre. Procediendo a cargar estadisticas.");
+				});
+			});
+
+			$('#show-stats-button').click(function() {
+				load_data();
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<h1>USM Horarios</h1>
+		<div id="new-container" style="margin-top: 150px">
+			<h3>Ingrese un id representativo (ej: tarea_mate) y pulse enter</h3>
+			<input type="text" id="id-field">
+			<h3>luego puede compartir la direccion de la pagina siguiente</h3>
+		</div>
+
+		<div id="name-container" style="margin-top: 150px">
+			<h3>Ingrese su nombre y pulse enter</h3>
+			<input type="text" id="name-field">
+			<br>
+			<h3>o tambien puedes...</h3>
+			<input type="button" id="show-stats-button" value="Ver las estadisticas">
+		</div>
+
+		<div id="table-container">
+			<h3>Ahora seleccione los horarios que tiene disponible</h3>
+			<table id="table" align="center">
+				<tr id="days"></tr>
+			</table>
+			<input type="button" class="back-button" value="<< Volver">
+			<input type="button" id="send-button" value="Enviar >>">
+		</div>
+
+		<div id="stats-container">
+			<h3>estas son las estadisticas del porcentaje<br>de personas que tienen disponible cierto bloque</h3>
+			<h4>(mantenga el mouse sobre el bloque para ver detalles)</h4>
+			<table id="ststable" align="center">
+				<tr id="stsdays"></tr>
+			</table>
+			<input type="button" class="back-button" value="<< Volver">
+		</div>
+
+		<span id="footer">Creado por Marcelo Jara Almeyda</span>
+	</body>
+</html> 
