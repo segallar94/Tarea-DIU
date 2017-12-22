@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Gimnasio 3 - Reserva Maquina</title>
   <img src="MARCA-Color.jpg" alt="header" align="middle" width="10%" height="10%" hspace="15" vspace= "15"/>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -229,12 +229,13 @@
     else
       $('#table-container').slideDown();
 
+    complete_table_sts();
     complete_table();
 
     $('.selectable').click(function() {
       $(this).toggleClass('selected');
       //setear texto arbitrario
-      $(this).html("sdasd");
+      $(this).html("Reservado");
     });
 
     $('#name-field').keypress(function(e) {
@@ -293,56 +294,51 @@
   </script>
 
 </head>
-<body>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li ><a href="index.html">Perfil</a></li>
+        <li class="active"><a href="maquina.html">Reserva Maquina</a></li>
+        <li><a href="aerobica.html">Reserva Aerobica</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="container-fluid text-center">
   <div class="row content">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Perfil</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Maquinas</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Aerobica</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Perfil</div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-				<h1 class="page-header" >Reserva bloque de Maquinas</h1>
-        <div id="table-container">
-          <table id="table" align="center">
-            <tr id="days"></tr>
-          </table>
-          <input type="button" class="back-button" value="<< Volver">
-          <input type="button" id="send-button" value="Enviar >>">
-        </div>
+    <div class="col-sm-2 sidenav">
 
-      </div>
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        <h1 class="page-header" >Reserva bloque de Aerobica</h1>
-        <div id="table-container">
-
-          <table id="table" align="center">
-            <tr id="days"></tr>
-          </table>
-          <input type="button" class="back-button" value="<< Volver">
-          <input type="button" id="send-button" value="Enviar >>">
-        </div>
-      </div>
     </div>
+    <div class="col-sm-8 text-left">
+      <h1  class="page-header">Reserva bloque de Maquina</h1>
+      <div id="table-container">
+        <table id="table" align="center">
+          <tr id="days"></tr>
+        </table>
+        <input type="button" class="back-button" value="<< Volver">
+        <input type="button" id="send-button" value="Enviar >>">
+      </div>
+
 
   </div>
 </div>
-
+</div>
 <footer class="containe text-justify">
 	<div class="grid">
 		<div class="row">
 			<div class="c12">
-				<p>© Universidad Técnica Federico Santa María - Gimnasio 3<br/>
+				<p>© Universidad Técnica Federico Santa María - Servicio de Apoyo Docente<br/>
 				Avenida España 1680, Valparaíso<br/>
 				<a href="tel:+56322654432"> +56 32 2654000 </a>  <a href="mailto:gim3@usm.cl">gim3@usm.cl</a></p>
 			</div>
