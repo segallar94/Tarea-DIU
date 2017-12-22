@@ -232,6 +232,8 @@
 
     $('.selectable').click(function() {
       $(this).toggleClass('selected');
+      //setear texto arbitrario
+      $(this).html("sdasd");
     });
 
     $('#name-field').keypress(function(e) {
@@ -270,6 +272,18 @@
           alert("Cargado exitosamente. Para cambiar la informacion use el mismo nombre. Procediendo a cargar estadisticas.");
       });
     });
+
+    //llenar tabla con bloques llenos
+    $('#cell_1-2_Lunes').toggleClass('selected').html("Sin cupos");
+    $('#cell_11-12_Lunes').toggleClass('selected').html("Sin cupos");
+    $('#cell_7-8_Lunes').toggleClass('selected').html("Sin cupos");
+    $('#cell_1-2_Miercoles').toggleClass('selected').html("Sin cupos");
+    $('#cell_3-4_Jueves').toggleClass('selected').html("Sin cupos");
+    $('#cell_7-8_Viernes').toggleClass('selected').html("Sin cupos");
+    $('#cell_11-22_Jueves').toggleClass('selected').html("Sin cupos");
+    $('#cell_3-4_Lunes').toggleClass('selected').html("Sin cupos");
+    $('#cell_1-2_Lunes').toggleClass('selected').html("hi");
+
 
     $('#show-stats-button').click(function() {
       load_data();
